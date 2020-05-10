@@ -44,14 +44,35 @@
         odit.
       </p>
     </main>
+    <footer>
+      <app-comment-form v-if="canAddComment" @created="createCommentHandler" />
+      <div class="comment" v-if="false">
+        <app-comment v-for="comment in 4" :key="comment" :comment="comment" />
+      </div>
+      <div class="text-center" v-else>No comments</div>
+    </footer>
   </article>
 </template>
 
 <script>
+import AppComment from "@/components/main/Comment";
+import AppCommentForm from "@/components/main/CommentForm";
+
 export default {
   validate({ params }) {
     return Boolean(params.id);
-  }
+  },
+  data() {
+    return {
+      canAddComment: true
+    };
+  },
+  methods: {
+    createCommentHandler() {
+      this.canAddComment = false;
+    }
+  },
+  components: { AppComment, AppCommentForm }
 };
 </script>
 
