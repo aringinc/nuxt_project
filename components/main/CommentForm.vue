@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$refs["form"].validate(valid => {
+      this.$refs["form"].validate(async valid => {
         if (valid) {
           this.loading = true;
           const formData = {
@@ -56,13 +56,15 @@ export default {
             postId: ""
           };
           try {
-            setTimeout(() => {
-              this.$emit("created");
-              this.$message.success("Comments was added.");
-              this.loading = false;
-            }, 2000);
+            await new Promise(resolve =>
+              setTimeout(() => {
+                this.$emit("created");
+                this.$message.success("Comments was added.");
+              }, 2000)
+            );
           } catch (e) {
             error(e);
+          } finally {
             this.loading = false;
           }
         } else {

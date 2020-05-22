@@ -1,16 +1,15 @@
 export const state = () => ({
-  token: null
-})
-
+  token: true
+});
 
 export const mutations = {
   setToken(state, token) {
-    state.token = token
+    state.token = token;
   },
   clearToken(state) {
-    state.token = null
+    state.token = null;
   }
-}
+};
 
 export const actions = {
   async login({
@@ -19,28 +18,36 @@ export const actions = {
   }, formData) {
     try {
       const token = await new Promise((resolve, reject) => {
-        setTimeout(() => resolve('mock-token'), 2000)
-      })
-      dispatch('setToken', token)
+        setTimeout(() => resolve("mock-token"), 2000);
+      });
+      dispatch("setToken", token);
     } catch (e) {
-      commit('setError', e, {
+      commit("setError", e, {
         root: true
-      })
-      throw e
+      });
+      throw e;
     }
+  },
+  createUser({
+    context
+  }, formData) {
+    try {
+      console.log("creatingUser", formData);
+
+    } catch (e) {}
   },
   logout({
     commit
   }) {
-    commit('clearToken')
+    commit("clearToken");
   },
   setToken({
     commit
   }, token) {
-    commit('setToken', token)
+    commit("setToken", token);
   }
-}
+};
 
 export const getters = {
   isAuthenticated: state => Boolean(state.token)
-}
+};

@@ -76,13 +76,16 @@ export default {
           this.loading = true;
           try {
             const formData = {
-              login: this.login,
-              password: this.password
+              login: this.controls.login,
+              password: this.controls.password
             };
             await this.$store.dispatch("auth/login", formData);
+            this.controls.login = "";
+            this.controls.password = "";
             this.$router.push("/admin");
           } catch (e) {
             console.error(e);
+          } finally {
             this.loading = false;
           }
         }
