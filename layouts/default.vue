@@ -12,10 +12,11 @@
 
 <script>
 import AppNavigation from "@/components/main/Navigation";
+
 export default {
   components: {
-    AppNavigation
-  }
+    AppNavigation,
+  },
 };
 </script>
 

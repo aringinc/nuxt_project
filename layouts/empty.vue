@@ -13,7 +13,7 @@ export default {
   },
   watch: {
     error(value) {
-      if (value) this.$message.error(value);
+      if (value) this.$message.error(value.response.data.message);
     }
   }
 };

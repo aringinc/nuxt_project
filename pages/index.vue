@@ -7,12 +7,13 @@
 </template>
 
 <script>
-import AppPost from "@/components/main/Post";
+import AppPost from '@/components/main/Post';
+
 export default {
   head: {
-    title: "Main"
+    title: 'Main',
   },
-  components: { AppPost }
+  components: { AppPost },
 };
 </script>
 

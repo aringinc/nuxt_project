@@ -58,61 +58,63 @@
 
 <script>
 export default {
-  layout: "admin",
-  middleware: ["admin-auth"],
+  layout: 'admin',
+  middleware: ['admin-auth'],
   data() {
     return {
-      image: "",
+      image: '',
       previewDialog: false,
       loading: false,
       controls: {
-        title: "",
-        text: ""
+        title: '',
+        text: '',
       },
       rules: {
         title: [
-          { required: true, message: "Title is required", trigger: "blur" }
+          { required: true, message: 'Title is required', trigger: 'blur' },
         ],
-        text: [{ required: true, message: "Text is required", trigger: "blur" }]
-      }
+        text: [
+          { required: true, message: 'Text is required', trigger: 'blur' },
+        ],
+      },
     };
   },
   methods: {
     onSubmit() {
-      this.$refs.form.validate(async valid => {
+      this.$refs.form.validate(async (valid) => {
         if (valid && this.image) {
           this.loading = true;
           const formData = {
             title: this.controls.title,
             text: this.controls.text,
-            image: this.image
+            image: this.image,
           };
           try {
-            await this.$store.dispatch("post/create", formData);
-            this.controls.text = "";
-            this.controls.title = "";
-            this.image = "";
+            await this.$store.dispatch('post/create', formData);
+            this.controls.text = '';
+            this.controls.title = '';
+            this.image = '';
             this.$refs.upload.clearFiles();
-            this.$message.success("Post was created.");
+            this.$message.success('Post was created.');
           } catch (e) {
             console.log(e);
           } finally {
             this.loading = false;
           }
         } else {
-          this.$message.warning("Form is not valid.");
+          this.$message.warning('Form is not valid.');
         }
       });
     },
     imageChangeHandle(file, fileList) {
-      console.log("file", file);
+      console.log('file', file);
       this.image = file.raw;
     },
     imageRemoveHandle(file, fileList) {
-      console.log(file, "-", fileList);
-      this.image = "";
-    }
-  }
+      console.log(file, '-', fileList);
+      this.image = '';
+    },
+  },
 };
 </script>
 

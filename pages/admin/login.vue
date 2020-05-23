@@ -31,58 +31,61 @@
 
 <script>
 export default {
-  layout: "empty",
+  layout: 'empty',
   data() {
     return {
       loading: false,
       controls: {
-        login: "",
-        password: ""
+        login: '',
+        password: '',
       },
       rules: {
         login: [
-          { required: true, message: "Login is required", trigger: "blur" }
+          { required: true, message: 'Login is required', trigger: 'blur' },
         ],
         password: [
           {
             required: true,
             message: "Password can't be empty",
-            trigger: "blur"
+            trigger: 'blur',
           },
           {
             min: 6,
-            message: "The password must be more than 6 symbols",
-            trigger: "blur"
-          }
-        ]
-      }
+            message: 'The password must be more than 6 symbols',
+            trigger: 'blur',
+          },
+        ],
+      },
     };
   },
   mounted() {
-    const message = this.$route.query.message;
+    const { message } = this.$route.query;
     switch (message) {
-      case "login":
-        this.$message.info("Please log in.");
+      case 'login':
+        this.$message.info('Please log in.');
         break;
-      case "logout":
-        this.$message.success("You have successfully logged out.");
+      case 'logout':
+        this.$message.success('You have successfully logged out.');
+        break;
+      case 'session':
+        this.$message.warning('Session timeout, please log in.');
         break;
     }
   },
   methods: {
     onSubmit() {
-      this.$refs["form"].validate(async valid => {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
           this.loading = true;
           try {
             const formData = {
               login: this.controls.login,
-              password: this.controls.password
+              password: this.controls.password,
             };
-            await this.$store.dispatch("auth/login", formData);
-            this.controls.login = "";
-            this.controls.password = "";
-            this.$router.push("/admin");
+            await this.$store.dispatch('auth/login', formData);
+            this.controls.login = '';
+            this.controls.password = '';
+            this.$router.push('/admin');
           } catch (e) {
             console.error(e);
           } finally {
@@ -90,7 +93,7 @@ export default {
           }
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
