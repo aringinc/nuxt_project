@@ -12,7 +12,8 @@
 </template>
 
 <script>
-import AppAside from "@/components/admin/Aside";
+import AppAside from '@/components/admin/aside';
+
 export default {
   components: { AppAside },
   computed: {
