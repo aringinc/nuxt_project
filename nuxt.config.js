@@ -36,7 +36,9 @@ module.exports = {
 
   buildModules: [],
 
-  modules: ['@nuxtjs/axios'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/pwa'],
+
+  workbox: {},
 
   axios: {},
 
