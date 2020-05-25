@@ -9,9 +9,9 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  data: {
+  date: {
     type: Date,
-    default: Date.now,
+    default: Date.now(),
   },
   views: {
     type: Number,

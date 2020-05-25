@@ -8,7 +8,7 @@
     >
       <h2 class="mb">Post creating</h2>
       <el-form-item label="Title" prop="title">
-        <el-input v-model.trim="controls.title" />
+        <el-input v-model="controls.title" />
       </el-form-item>
       <el-form-item label="Text (also .md or .html)" prop="text">
         <el-input
@@ -60,6 +60,7 @@
 export default {
   layout: 'admin',
   middleware: ['admin-auth'],
+  head: { title: `New post | ${process.env.appName}` },
   data() {
     return {
       image: '',
@@ -107,11 +108,9 @@ export default {
       });
     },
     imageChangeHandle(file, fileList) {
-      console.log('file', file);
       this.image = file.raw;
     },
     imageRemoveHandle(file, fileList) {
-      console.log(file, '-', fileList);
       this.image = '';
     },
   },

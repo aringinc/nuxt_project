@@ -49,7 +49,6 @@ module.exports.createUser = async (req, res) => {
     });
   } else {
     const salt = bcrypt.genSaltSync(10);
-    console.log('salt', salt);
     const user = new User({
       login: req.body.login,
       password: bcrypt.hashSync(req.body.password, salt),

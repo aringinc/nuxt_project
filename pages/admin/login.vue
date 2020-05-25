@@ -32,6 +32,7 @@
 <script>
 export default {
   layout: 'empty',
+  head: { title: `Log in as administrator | ${process.env.appName}` },
   data() {
     return {
       loading: false,
@@ -69,6 +70,8 @@ export default {
         break;
       case 'session':
         this.$message.warning('Session timeout, please log in.');
+        break;
+      default:
         break;
     }
   },

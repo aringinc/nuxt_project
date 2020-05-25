@@ -12,7 +12,7 @@ const keys = require('./keys');
 const app = express();
 
 mongoose
-  .connect(keys.MONGO_URI)
+  .connect(keys.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch((error) => console.error(error));
 
@@ -27,7 +27,7 @@ app.use(
 app.use(bodyParser.json());
 
 app.use('/api/auth', authRoutes);
-app.use('api/post', postRoutes);
+app.use('/api/post', postRoutes);
 app.use('/api/comment', commentsRoutes);
 
 module.exports = app;

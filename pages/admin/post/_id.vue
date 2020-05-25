@@ -24,13 +24,13 @@
       <div class="mb">
         <small class="mr">
           <i class="el-icon-time"></i>
-          <span style="margin-left: 10px">
-            {{ new Date(post.date).toLocaleString() }}
+          <span style="margin-left: 10px;">
+            {{ post.date | date }}
           </span>
         </small>
         <small>
           <i class="el-icon-view"></i>
-          <span style="margin-left: 10px">{{ post.views }}</span>
+          <span style="margin-left: 10px;">{{ post.views }}</span>
         </small>
       </div>
 
@@ -48,44 +48,50 @@
 </template>
 
 <script>
+/* eslint-disable no-underscore-dangle */
 export default {
-  layout: "admin",
-  middeware: ["admin-auth"],
+  layout: 'admin',
+  middeware: ['admin-auth'],
   head() {
     return {
-      title: `Post | ${this.post.title}`
+      title: `${this.post.title} | ${process.env.appName}`,
     };
   },
   validate({ params }) {
     return Boolean(params.id);
   },
   async asyncData({ store, params }) {
-    const post = await store.dispatch("post/fetchAdminById", params.id);
+    const post = await store.dispatch('post/fetchAdminById', params.id);
     return { post };
   },
   data() {
     return {
       loading: false,
       controls: {
-        text: ""
+        text: '',
       },
       rules: {
-        text: [{ required: true, message: "Text is required", trigger: "blur" }]
-      }
+        text: [
+          { required: true, message: 'Text is required', trigger: 'blur' },
+        ],
+      },
     };
+  },
+  mounted() {
+    this.controls.text = this.post.text;
   },
   methods: {
     onSubmit() {
-      this.$refs.form.validate(async valid => {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
           this.loading = true;
           const formData = {
             text: this.controls.text,
-            id: this.post._id
+            id: this.post._id,
           };
           try {
-            await this.$store.dispatch("post/update", formData);
-            this.$message.success("Post was updated.");
+            await this.$store.dispatch('post/update', formData);
+            this.$message.success('Post was updated.');
           } catch (e) {
             console.log(e);
           } finally {
@@ -93,8 +99,8 @@ export default {
           }
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

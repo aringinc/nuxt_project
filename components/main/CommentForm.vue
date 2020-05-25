@@ -7,7 +7,7 @@
   >
     <h1>Add comment</h1>
     <el-form-item label="Your name" prop="name">
-      <el-input v-model.trim="controls.name" />
+      <el-input v-model="controls.name" />
     </el-form-item>
     <el-form-item label="Text" prop="text">
       <el-input
@@ -28,52 +28,59 @@
 
 <script>
 export default {
+  props: {
+    postId: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       loading: false,
       controls: {
-        name: "",
-        text: ""
+        name: '',
+        text: '',
       },
       rules: {
         name: [
-          { required: true, message: "Name is required", trigger: "blur" }
+          { required: true, message: 'Name is required', trigger: 'blur' },
         ],
         text: [
-          { required: true, message: "Text can't be empty", trigger: "blur" }
-        ]
-      }
+          { required: true, message: "Text can't be empty", trigger: 'blur' },
+        ],
+      },
     };
   },
   methods: {
     onSubmit() {
-      this.$refs["form"].validate(async valid => {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
           this.loading = true;
           const formData = {
             name: this.controls.name,
             text: this.controls.text,
-            postId: ""
+            postId: this.postId,
           };
           try {
-            await new Promise(resolve =>
-              setTimeout(() => {
-                this.$emit("created");
-                this.$message.success("Comments was added.");
-              }, 2000)
+            const newComment = await this.$store.dispatch(
+              'comment/create',
+              formData
             );
+            this.$message.success('Comment was created.');
+            this.$emit('created', newComment);
           } catch (e) {
-            error(e);
+            console.error(e);
           } finally {
             this.loading = false;
           }
         } else {
-          console.log("error submit");
+          console.log('error submit');
           return false;
         }
+        return false;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
